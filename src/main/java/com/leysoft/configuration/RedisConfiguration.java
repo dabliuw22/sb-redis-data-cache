@@ -8,6 +8,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
 
 @Configuration
@@ -18,8 +19,12 @@ public class RedisConfiguration {
     private String redisHost;
 
     @Value(
-            value = "${spring.redis.port}")
+            value = "${spring.redis.port:6379}")
     private int redisPort;
+
+    @Value(
+            value = "${redis.transaction-support:true}")
+    private boolean redisTransactioSupport;
 
     @Bean
     public RedisStandaloneConfiguration redisStandaloneConfiguration() {
@@ -32,12 +37,23 @@ public class RedisConfiguration {
         return new JedisConnectionFactory(standaloneConfiguration);
     }
 
-    @Bean
+    @Bean(
+            name = "redisTemplate")
     public RedisTemplate<String, Object>
             redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         redisTemplate.setValueSerializer(new GenericToStringSerializer<>(Object.class));
+        redisTemplate.setEnableTransactionSupport(redisTransactioSupport);
         return redisTemplate;
+    }
+
+    @Bean(
+            name = "stringRedisTemplate")
+    public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
+        stringRedisTemplate.setConnectionFactory(redisConnectionFactory);
+        stringRedisTemplate.setEnableTransactionSupport(redisTransactioSupport);
+        return stringRedisTemplate;
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.leysoft.model.Person;
-import com.leysoft.repository.PersonRepository;
+import com.leysoft.repository.inter.PersonRepository;
 import com.leysoft.service.inter.PersonService;
 
 @Service
