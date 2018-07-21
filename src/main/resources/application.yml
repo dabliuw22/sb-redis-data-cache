@@ -9,5 +9,5 @@ spring:
       
 redis:
   time-to-live:
-    seconds: 300
+    seconds: 120
   transaction-support: true

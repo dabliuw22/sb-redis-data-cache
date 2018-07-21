@@ -6,7 +6,8 @@ import java.io.Serializable;
 import org.springframework.data.redis.core.RedisHash;
 
 @RedisHash(
-        value = "Person")
+        value = "Person",
+        timeToLive = 120)
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
