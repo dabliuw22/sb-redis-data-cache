@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.3.RELEASE'
+		springBootVersion = '2.1.3.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -25,9 +25,8 @@ repositories {
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-redis')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('redis.clients:jedis:2.9.0')
-	
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'redis.clients:jedis:2.9.0'
+	testImplementation'org.springframework.boot:spring-boot-starter-test'
 }
